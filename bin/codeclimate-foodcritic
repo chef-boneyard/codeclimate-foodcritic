@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+require 'foodcritic'
+require 'json'
+
+linter = FoodCritic::Linter.new
+linter.check({"cookbook_paths" => ".", "progress" => true}).warnings.each do |lint|
+  hash = { "check_name" => lint.rule.code }
+  puts "#{hash.to_json}\0"
+end
+
