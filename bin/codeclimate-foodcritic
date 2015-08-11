@@ -1,11 +1,6 @@
 #!/usr/bin/env ruby
+$LOAD_PATH.unshift(File.expand_path(File.join(File.dirname(__FILE__), "../lib")))
 
-require 'foodcritic'
-require 'json'
+require 'cc/engine/foodcritic'
 
-linter = FoodCritic::Linter.new
-linter.check({"cookbook_paths" => ".", "progress" => true}).warnings.each do |lint|
-  hash = { "check_name" => lint.rule.code }
-  puts "#{hash.to_json}\0"
-end
-
+CC::Engine::Foodcritic.new("/code", ENV["ENGINE_CONFIG"], STDOUT).run

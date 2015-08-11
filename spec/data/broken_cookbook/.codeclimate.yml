@@ -1,0 +1,4 @@
+engines:
+  foodcritic:
+    enabled: true
+
