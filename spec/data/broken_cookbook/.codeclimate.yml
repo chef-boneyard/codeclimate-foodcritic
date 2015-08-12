@@ -1,4 +1,7 @@
 engines:
   foodcritic:
     enabled: true
+#    config:
+#      excludes:
+#      - "attributes/**/**"
 

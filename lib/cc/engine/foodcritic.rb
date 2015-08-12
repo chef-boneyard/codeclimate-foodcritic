@@ -11,9 +11,12 @@ module CC
       end
 
       def run
-        linter = FoodCritic::Linter.new
-        linter.check({"cookbook_paths" => @code, "progress" => true}).warnings.each do |lint|
-          hash = { 
+        linter = FoodCritic::Linter.new()
+        lints = linter.check({ "cookbook_paths" => @code,
+                               "progress" => true,
+                               "exclude_paths" => exclude_paths}).warnings
+        lints.each do |lint|
+          lint_hash = { 
             "type" => "issue",
             "check_name" => "FoodCritic #{lint.rule.code}",
             "description" => lint.rule.name,
@@ -27,8 +30,14 @@ module CC
             }
           }
   
-          puts "#{hash.to_json}\0"
+          puts "#{lint_hash.to_json}\0"
         end
+      end
+
+      private
+
+      def exclude_paths
+        (config = @config["config"]) ? config["excludes"] : []
       end
 
     end
