@@ -9,3 +9,9 @@ template "/derp" do
   group "root"
   action :create
 end
+
+template '/derp2' do
+  owner "root"
+  group "root"
+  action :create
+end
