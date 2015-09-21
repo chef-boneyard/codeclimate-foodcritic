@@ -11,26 +11,28 @@ module CC
       end
 
       def run
-        linter = FoodCritic::Linter.new()
-        lints = linter.check({ "cookbook_paths" => @code,
-                               "progress" => true,
-                               "exclude_paths" => exclude_paths}).warnings
+        linter = FoodCritic::Linter.new
+        lints = linter.check({ cookbook_paths: @code,
+                               progress: false,
+                               tags: ["~FC011", "~FC033"],
+                               exclude_paths: exclude_paths}).warnings
         lints.each do |lint|
-          lint_hash = { 
+          lint_hash = {
             "type" => "issue",
             "check_name" => "FoodCritic #{lint.rule.code}",
             "description" => lint.rule.name,
             "categories" => ["Style"],
             "location" => {
               "path" => lint.match[:filename].split("/code/")[1].to_s,
-              "lines" => { 
+              "lines" => {
                 "begin" => lint.match[:line],
                 "end" => lint.match[:line]
               }
-            }
+            },
+            "remediation_points" => 5_000
           }
-  
-          puts "#{lint_hash.to_json}\0"
+
+          @io.print "#{lint_hash.to_json}\0"
         end
       end
 

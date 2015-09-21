@@ -1,1 +1,2 @@
-default[:broken_cookbook][:foo] = "bar"
+default[:foo] = "bar"
+default[:broken_cookbook][:baz] = "bar"
