@@ -29,7 +29,7 @@ module CC
                 "end" => lint.match[:line]
               }
             },
-            "remediation_points" => 5_000
+            "remediation_points" => 150_000
           }
 
           @io.print "#{lint_hash.to_json}\0"
